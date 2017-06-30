@@ -130,9 +130,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddData.cs" />
-    <Compile Include="ComapnyModel.cs" />
+    <Compile Include="Model\AppSettingPoco.cs" />
+    <Compile Include="Model\ASRProClass.cs" />
+    <Compile Include="AWSConnection\AWSConnectionService.cs" />
+    <Compile Include="Model\ComapnyModel.cs" />
     <Compile Include="CrudOperation.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="Model\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

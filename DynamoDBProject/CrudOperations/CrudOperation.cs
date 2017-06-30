@@ -9,7 +9,7 @@ using Amazon.DynamoDBv2.Model;
 using Amazon.DynamoDBv2.DataModel;
 using System.Threading;
 
-namespace DynamoDBProject
+namespace DynamoDBProject.CrudOperations
 {
     class CrudOperation
     {
@@ -32,6 +32,10 @@ namespace DynamoDBProject
             else if (value.N != null)
             {
                 Console.WriteLine(value.N);
+            }
+            else if(value.M.Count > 0)
+            {
+                printItem(value.M);
             }
         }
 

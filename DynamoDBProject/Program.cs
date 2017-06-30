@@ -4,60 +4,73 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
-using Amazon;
-using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.Model;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
-using System.Threading;
-using System.Configuration;
-using Amazon.EC2;
-using Amazon.Runtime;
-using Amazon.Runtime.CredentialManagement;
+
+using DynamoDBProject.AWSConnection;
+using DynamoDBProject.Model;
 
 namespace DynamoDBProject
 {
     class Program
     {
         private static int _productId;
-
         public static void Main(string[] args)
         {
             try
             {
-                //gretting the credentials 
-                Amazon.Runtime.AWSCredentials cred = Amazon.Util.ProfileManager.GetAWSCredentials("cdkglobal");
-              
-                //getting the Amazon DB client
-                //passing the credentials and the region as the parameters 
-                AmazonDynamoDBClient client = new AmazonDynamoDBClient(cred, RegionEndpoint.USWest2);
-
-                //creating the context of the DynamoDB by passing the DynamoDBClient
-                DynamoDBContext context = new DynamoDBContext(client);
-
                 //Task<CreateTableResponse> createTableRespone = CrudOperation.createTableAsync(client, "Company");
                 //Console.WriteLine(createTableRespone.Result.TableDescription.TableStatus);
 
                 //CrudOperation.saveProduct<ComapnyModel>(context,AddData.companyModel);
 
-                Task<QueryResponse> taskQueryResponse = CrudOperation.queryTable(client, "Company");
-                QueryResponse queryResponse = taskQueryResponse.Result;
-                List<Dictionary<string, AttributeValue>> queryResponseItems = queryResponse.Items;
-                foreach(Dictionary<string,AttributeValue> keyValuePair in queryResponseItems)
+                //Task<QueryResponse> taskQueryResponse = CrudOperation.queryTable(client, "Company");
+                //QueryResponse queryResponse = taskQueryResponse.Result;
+                //List<Dictionary<string, AttributeValue>> queryResponseItems = queryResponse.Items;
+                //foreach(Dictionary<string,AttributeValue> keyValuePair in queryResponseItems)
+                //{
+                //    CrudOperation.printItem(keyValuePair);
+                //}
+
+                //var table = Table.LoadTable(client, "Company");
+                //var item = table.GetItem(1,"ABC Inc");
+                //var items = table.CreateBatchGet();
+                //var jItem = item.ToJson();
+                //Console.WriteLine(jItem);
+
+                //QueryRequest queryRequest = new QueryRequest
+                //{
+                //    TableName = "AppSettings",
+                //    KeyConditionExpression = "KeyName = :keyName",
+                //    ExpressionAttributeValues = new Dictionary<string, AttributeValue>
+                //    {
+                //        {
+                //            ":keyName", new AttributeValue
+                //            {
+                //                S = "ASRPro"
+                //            }
+                //        }
+                //    }
+                //};
+
+                //CancellationToken ca = new CancellationToken();
+
+                //Task<QueryResponse> taskQueryResponse = client.QueryAsync(queryRequest);
+                //QueryResponse queryresponse = taskQueryResponse.Result;
+                //List<Dictionary<string,AttributeValue>> queryResponseItems = queryresponse.Items;
+                //foreach(Dictionary<string,AttributeValue> kvp in queryResponseItems)
+                //{
+                //    CrudOperation.printItem(kvp);
+                //}
+
+                IEnumerable<AppSettingPoco> queyResponse = AWSConnectionService.context.Scan<AppSettingPoco>(new ScanCondition("KeyName",ScanOperator.Equal,"ASRPro"));
+                foreach (AppSettingPoco app in queyResponse)
                 {
-                    CrudOperation.printItem(keyValuePair);
+                    Console.WriteLine(app.KeyName);
+                    Console.WriteLine("ASRProDemoSite"+app.KeyValue.ASRProDemoSite);   
                 }
-
-                var table = Table.LoadTable(client, "Company");
-                var item = table.GetItem(1,"ABC Inc");
-                var items = table.CreateBatchGet();
-                var jItem = item.ToJson();
-                Console.WriteLine(jItem);
-
-                
-
+                Console.Read();
 
                 ////scanning the table
                 //Task<ScanResponse> result = CrudOperation.scanTable(client, "ProductTablle");

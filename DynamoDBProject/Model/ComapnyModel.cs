@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Amazon.DynamoDBv2.DataModel;
 
-namespace DynamoDBProject
+namespace DynamoDBProject.Model
 {
     [DynamoDBTable("Company")]
     class ComapnyModel
