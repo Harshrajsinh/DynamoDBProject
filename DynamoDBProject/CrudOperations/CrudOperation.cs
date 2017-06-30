@@ -9,6 +9,9 @@ using Amazon.DynamoDBv2.Model;
 using Amazon.DynamoDBv2.DataModel;
 using System.Threading;
 
+//custom libraries
+using DynamoDBProject.Model;
+
 namespace DynamoDBProject.CrudOperations
 {
     class CrudOperation
