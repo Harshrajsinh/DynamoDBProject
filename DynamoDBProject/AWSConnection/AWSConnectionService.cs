@@ -15,11 +15,11 @@ namespace DynamoDBProject.AWSConnection
     public static class AWSConnectionService
     {
         //gretting the credentials 
-        public static Amazon.Runtime.AWSCredentials cred = Amazon.Util.ProfileManager.GetAWSCredentials("cdkglobal");
+        public static Amazon.Runtime.AWSCredentials crendentials = Amazon.Util.ProfileManager.GetAWSCredentials("cdkglobal");
 
         //getting the Amazon DB client
         //passing the credentials and the region as the parameters 
-        public static AmazonDynamoDBClient client = new AmazonDynamoDBClient(cred, RegionEndpoint.USWest2);
+        public static AmazonDynamoDBClient client = new AmazonDynamoDBClient(crendentials, RegionEndpoint.USWest2);
 
         //creating the context of the DynamoDB by passing the DynamoDBClient
         public static DynamoDBContext context = new DynamoDBContext(client);
