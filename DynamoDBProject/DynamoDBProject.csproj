@@ -129,6 +129,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\Client.cs" />
     <Compile Include="Model\AddData.cs" />
     <Compile Include="Model\AppSettingPoco.cs" />
     <Compile Include="Model\ASRProClass.cs" />
@@ -138,6 +139,8 @@
     <Compile Include="Model\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serviceconnection\ServiceConnection.cs" />
+    <Compile Include="Service\IService.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -173,4 +176,8 @@
   <ItemGroup>
     <Analyzer Include="..\packages\AWSSDK.DynamoDBv2.3.3.4.13\analyzers\dotnet\cs\AWSSDK.DynamoDBv2.CodeAnalysis.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
 </Project>

@@ -13,30 +13,40 @@ using DynamoDBProject.Model;
 using Amazon.DynamoDBv2.Model;
 using DynamoDBProject.CrudOperations;
 using System.Threading.Tasks;
-using System.Configuration;
-using System.Threading;
+
 
 namespace DynamoDBProject
 {
     class Program
     {
-        private static int _productId;
+        public static int _productId;
+
         public static void Main(string[] args)
         {
             try
             {
-                createTableQueries();
-                saveData();
-                queryTable();
-                scanTable();
-                retrieveData();
-                deleteTable();
+                //createTableQueries();
+                //saveData();
+                //queryTable();
+                //scanTable();
+                //retrieveData();
+                //deleteTable();
+                dataOnView();
             }
             catch (Exception ex)
             {
-                Console.Write(ex.Message + "         " + ex.Source+"          "+ex.InnerException);
+                Console.Write(ex.Message + "         " + ex.Source+"          "+ex.TargetSite);
             }
+
             Console.Read();
+        }
+
+        //method for calling the postData on the view
+        //using dependency Injection
+        public static void dataOnView()
+        {
+            Client client = new Client(new ServiceConnection());
+            client.postData();
         }
 
         //deleting the table
@@ -53,7 +63,7 @@ namespace DynamoDBProject
 
         //queries for creating the table 
         public static void createTableQueries()
-        { 
+        {
             //createTable(client,"Compnay");
             Task<CreateTableResponse> createTableResponse = CrudOperation.createTableAsync(AWSConnectionService.client, "Company");
             if (createTableResponse.IsCompleted)
@@ -138,23 +148,23 @@ namespace DynamoDBProject
         //scanning the table 
         public static void scanTable()
         {
-            //scanning the table (Async Way)
-            Task<ScanResponse> result = CrudOperation.scanTable(AWSConnectionService.client, "ProductTablle");
-            ScanResponse response = result.Result;
-            List<Dictionary<string, AttributeValue>> items1 = response.Items;
-            foreach (Dictionary<string, AttributeValue> dic in items1)
-            {
-                CrudOperation.printItem(dic);
-            }
+            ////scanning the table (Async Way)
+            //Task<ScanResponse> result = CrudOperation.scanTable(AWSConnectionService.client, "ProductTablle");
+            //ScanResponse response = result.Result;
+            //List<Dictionary<string, AttributeValue>> items1 = response.Items;
+            //foreach (Dictionary<string, AttributeValue> dic in items1)
+            //{
+            //    CrudOperation.printItem(dic);
+            //}
 
 
             //scanning the table with help of the .Net Object Persistence Model
-            IEnumerable<AppSettingPoco> queyResponse = AWSConnectionService.context.Scan<AppSettingPoco>(new ScanCondition("KeyName", ScanOperator.Equal, "ASRPro"));
-            foreach (AppSettingPoco app in queyResponse)
-            {
-                Console.WriteLine(app.KeyName);
-                Console.WriteLine("ASRProDemoSite: " + app.KeyValue.ASRProDemoSite);
-            }
+            //IEnumerable<AppSettingPoco> queyResponse = AWSConnectionService.context.Scan<AppSettingPoco>(new ScanCondition("KeyName", ScanOperator.Equal, "ASRPro"));
+            //foreach (AppSettingPoco app in queyResponse)
+            //{
+            //    Console.WriteLine(app.KeyName);
+            //    Console.WriteLine("ASRProDemoSite: " + app.KeyValue.ASRProDemoSite);
+            //}
         }
 
 
@@ -188,6 +198,9 @@ namespace DynamoDBProject
             //to retrieve product
             //passing the context to the method to retreive the data
             //_productId = 2;
+
+           
+
             Task<Product> productRetrieved = CrudOperation.crudOperations(AWSConnectionService.context, _productId);
             Product p = productRetrieved.Result;
             Console.WriteLine(p.ProductId + "----------" + p.ProductName);

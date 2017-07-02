@@ -1,4 +1,4 @@
-﻿/*created by Harshraj Thakor on 29 June 2017
+﻿ /*created by Harshraj Thakor on 29 June 2017
  * 
  * This class provides functionality for connecting the Amazon DynamoDB
  * It create the credentials from the profile name
